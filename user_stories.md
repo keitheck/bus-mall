@@ -16,10 +16,15 @@
 -add assignment assets to img/ directory.
 
 -create constructor function in JS that makes an array of objects with the following properties
+
 > name
+
 > image filepath
+
 > previously shown Boolean
+
 > number of times shown
+
 > number of clicks
 
 
