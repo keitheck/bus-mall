@@ -3,3 +3,51 @@ body {
   margin: 20px auto;
   background-color: #333;
 }
+
+h1 {
+  font-family:sans-serif;
+  color: #fff;
+  font-size: 38px;
+  margin: 50px;
+}
+
+button {
+  font-size: 24px;
+  padding: 20px 30px;
+  margin: 50px;
+  background-color: green;
+  outline-color: #fff;
+  color: #fff;
+}
+
+button:hover {
+  opacity: 0.55;
+  transition: 450ms;  
+}
+
+.select-three {
+  display: none;
+}
+
+.show-chart {
+  align-content:center;
+}
+
+
+#image0:hover {
+    /* border: 10px solid pink; */
+    opacity: 0.55;
+    transition: 450ms;
+}
+
+#image1:hover {
+    /* border: 10px solid pink; */
+    opacity: 0.55;
+    transition: 450ms;
+}
+
+#image2:hover {
+    /* border: 10px solid pink; */
+    opacity: 0.55;
+    transition: 450ms;
+}

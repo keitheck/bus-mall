@@ -1,5 +1,13 @@
 'use strict';
 
+// document.getElementById('btn').style.display = 'none';
+var btn = document.getElementById('btn');
+btn.style.display = 'none';
+var displayChooser = document.getElementById('select-three');
+displayChooser.style.display = 'block';
+var displayChart = document.getElementById('show-chart');
+displayChart.style.display = 'none';
+
 //GENERATE RANDOM NUMBER BETWEEN TWO VALUES----------------------
 
 function randomNumber(min, max) { //via doveloper.mozilla.org
@@ -73,9 +81,10 @@ var generateThreeImageFunction = function(){
   }
 };
 
+
 // generateThreeImageFunction(); //placed in function at bottom to call all together
 
-console.log('Three Random Images Array', threeRandomImages);
+// console.log('Three Random Images Array', threeRandomImages);
 
 // //------------------------------------------------------------------
 //RENDER THREE IMAGES
@@ -99,7 +108,7 @@ var eventCounter = 0;
 
 var handleClick = function(e){
   var targetImage = e.target.attributes[1].value;
-  console.log(targetImage);
+  // console.log(targetImage);
   for (var r = 0; r < photoOfGizmos.length; r++){ //increment timesSelected++
     if (targetImage === photoOfGizmos[r]){
       var clickCounter = Gizmos.allGizmos[r];
@@ -109,10 +118,31 @@ var handleClick = function(e){
   threeRandomImages.length = 0;
   eventCounter++;
   runProgram();
-  if (eventCounter > 25){ //set graph attributes to hide then toggle to show
+  if(eventCounter <= 23){
+    document.getElementById('btn').style.display = 'none';
+  }
+  if (eventCounter > 23){ //set graph attributes to hide then toggle to show
     console.log('25 Clicks show graph');
+    // document.getElementById('select-three').style.display = 'none';
+    displayChooser.style.display = 'none';
+    // document.getElementById('btn').style.display = 'block';
+    btn.style.display = 'block';
+    displayChart.style.display = 'block';
+    totalNumberOfClicks.length = 0;
+    numberOfClicksFunction();
+    drawChart();
+    eventCounter = 0;
+    console.log(Gizmos.allGizmos);
   }
 };
+
+var resumeChooser = function (){
+  btn.style.display = 'none';
+  displayChart.style.display = 'none';
+  displayChooser.style.display = 'block';
+
+};
+
 
 var image0 = document.getElementById('image0');
 var image1 = document.getElementById('image1');
@@ -122,15 +152,106 @@ image0.addEventListener('click',handleClick);
 image1.addEventListener('click',handleClick);
 image2.addEventListener('click',handleClick);
 
+//CHARTS.JS RENDER -----------------------------------------------------
+var totalNumberOfClicks = [];
+
+var numberOfClicksFunction = function(){
+  for(var t = 0; t < photoOfGizmos.length; t++){
+    var getNumberOfClicks = Gizmos.allGizmos[t];
+    // console.log('getNumberOfClicks', getNumberOfClicks);
+    var numClicksBucket = getNumberOfClicks.timesSelected;
+    // console.log('numClicksBucket', numClicksBucket);
+    totalNumberOfClicks.push(numClicksBucket);
+  }
+  console.log('totalNumberOfClicks', totalNumberOfClicks);
+};
+
+// numberOfClicksFunction();   ///left of here <------------------------------------------move into on click event function
 
 
+// Chart.data.push();
+
+//Chart Script----------------------------------------------------------------
+
+function drawChart(){
+  var ctx = document.getElementById("myChart").getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'],
+      datasets: [{
+        label: '# of Votes',
+        data: totalNumberOfClicks,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 119, 28, 0.2)',
+          'rgba(255, 247, 28, 0.2)',
+          'rgba(146, 255, 28, 0.2)',
+          'rgba(28, 242, 255, 0.2)',
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgba(255, 119, 28, 0.2)',
+          'rgba(255, 247, 28, 0.2)',
+          'rgba(146, 255, 28, 0.2)',
+          'rgba(28, 242, 255, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255,99,132,1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(255, 119, 28, 1)',
+          'rgba(255, 247, 28, 1)',
+          'rgba(146, 255, 28, 1)',
+          'rgba(28, 242, 255, 1)',
+          'rgba(255 ,99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 247, 28, 1)',
+          'rgba(146, 255, 28, 1)',
+          'rgba(28, 242, 255, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(255, 159, 64, 1)',
+          'rgba(255, 119, 28, 1)'
+
+        ],
+        borderWidth: 2
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero:true
+          }
+        }]
+      }
+    }
+  });
+}
 
 
 //RUN ALL CODES---------------------------------------------------------
 var runProgram = function(){
   generateThreeImageFunction();
   renderThreeImagesToDom();
-  console.log(Gizmos.allGizmos);
+  // console.log(Gizmos.allGizmos);
 };
 
 runProgram();
+
+btn.addEventListener('click', resumeChooser);
