@@ -1,6 +1,6 @@
 'use strict';
 
-//GENERATE RANDOM NUMBER BETWEEN TWO VALUES
+//GENERATE RANDOM NUMBER BETWEEN TWO VALUES----------------------
 
 function randomNumber(min, max) { //via doveloper.mozilla.org
   min = Math.ceil(min);
@@ -8,7 +8,11 @@ function randomNumber(min, max) { //via doveloper.mozilla.org
   return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }
 
+//MANUALLY ENTERED ARRAY OF FILEPATHS----------------------------
+
 var photoOfGizmos = ['img/bag.jpg', 'img/banana.jpg', 'img/bathroom.jpg', 'img/boots.jpg', 'img/breakfast.jpg', 'img/bubblegum.jpg', 'img/chair.jpg', 'img/cthulhu.jpg', 'img/dog-duck.jpg', 'img/dragon.jpg', 'img/pen.jpg', 'img/pet-sweep.jpg', 'img/scissors.jpg', 'img/shark.jpg', 'img/sweep.png', 'img/tauntaun.jpg', 'img/unicorn.jpg', 'img/usb.jpg', 'img/water-can.jpg', 'img/wine-glass.jpg' ];
+
+//SLICE NAME FROM FILEPATH----------------------------------------
 
 var gizmoNames = [];
 
@@ -35,7 +39,7 @@ for(var j = 0; j < gizmoNames.length; j++){
   new Gizmos(gizmoNames[j], photoOfGizmos[j]);
 }
 
-//GENERATE AN ARRAY OF THREE IMAGES
+//GENERATE AN ARRAY OF THREE IMAGES-----------------------------------
 
 var threeRandomImages = [];
 
@@ -88,7 +92,41 @@ var renderThreeImagesToDom = function(){
   }
 };
 
+//ON CLICK EVENT CODE -------------------------------------------------
 
+var eventCounter = 0;
+
+
+var handleClick = function(e){
+  var targetImage = e.target.attributes[1].value;
+  console.log(targetImage);
+  for (var r = 0; r < photoOfGizmos.length; r++){ //increment timesSelected++
+    if (targetImage === photoOfGizmos[r]){
+      var clickCounter = Gizmos.allGizmos[r];
+      clickCounter.timesSelected++;
+    }
+  }
+  threeRandomImages.length = 0;
+  eventCounter++;
+  runProgram();
+  if (eventCounter > 25){ //set graph attributes to hide then toggle to show
+    console.log('25 Clicks show graph');
+  }
+};
+
+var image0 = document.getElementById('image0');
+var image1 = document.getElementById('image1');
+var image2 = document.getElementById('image2');
+
+image0.addEventListener('click',handleClick);
+image1.addEventListener('click',handleClick);
+image2.addEventListener('click',handleClick);
+
+
+
+
+
+//RUN ALL CODES---------------------------------------------------------
 var runProgram = function(){
   generateThreeImageFunction();
   renderThreeImagesToDom();
