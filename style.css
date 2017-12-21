@@ -22,7 +22,19 @@ button {
 
 button:hover {
   opacity: 0.55;
-  transition: 450ms;  
+  transition: 450ms;
+  transform: scale(0.95);
+}
+
+button:active {
+  opacity: 0.55;
+  transition: 350ms;
+  transform: scale(1.15);
+}
+
+canvas {
+  transition: 3000ms;
+  /* transform: rotate(360deg); */
 }
 
 .select-three {
@@ -38,16 +50,19 @@ button:hover {
     /* border: 10px solid pink; */
     opacity: 0.55;
     transition: 450ms;
+    transform: scale(0.95);
 }
 
 #image1:hover {
     /* border: 10px solid pink; */
     opacity: 0.55;
     transition: 450ms;
+    transform: scale(0.95);
 }
 
 #image2:hover {
     /* border: 10px solid pink; */
     opacity: 0.55;
     transition: 450ms;
+    transform: scale(0.95);
 }

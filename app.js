@@ -64,6 +64,7 @@ function Gizmos(name, filepath){
 if (localStorage.list) {
   Gizmos.allGizmos = JSON.parse(localStorage.list);
   console.log('get localStorage')
+  eventCounter = 24;
 } else {
   for(var j = 0; j < gizmoNames.length; j++){
     new Gizmos(gizmoNames[j], photoOfGizmos[j]);
