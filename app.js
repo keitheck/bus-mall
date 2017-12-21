@@ -8,6 +8,25 @@ displayChooser.style.display = 'block';
 var displayChart = document.getElementById('show-chart');
 displayChart.style.display = 'none';
 
+//MANUALLY ENTERED ARRAY OF FILEPATHS----------------------------
+
+var photoOfGizmos = ['img/bag.jpg', 'img/banana.jpg', 'img/bathroom.jpg', 'img/boots.jpg', 'img/breakfast.jpg', 'img/bubblegum.jpg', 'img/chair.jpg', 'img/cthulhu.jpg', 'img/dog-duck.jpg', 'img/dragon.jpg', 'img/pen.jpg', 'img/pet-sweep.jpg', 'img/scissors.jpg', 'img/shark.jpg', 'img/sweep.png', 'img/tauntaun.jpg', 'img/unicorn.jpg', 'img/usb.jpg', 'img/water-can.jpg', 'img/wine-glass.jpg' ];
+
+
+//DECLARE VARIABLES-----------------------------------------------
+var totalNumberOfClicks = [];
+var gizmoNames = [];
+Gizmos.allGizmos = [];
+var threeRandomImages = [];
+var eventCounter = 0;
+
+
+
+
+//SAVE PERSISTANCE DATA -------------
+
+
+
 //GENERATE RANDOM NUMBER BETWEEN TWO VALUES----------------------
 
 function randomNumber(min, max) { //via doveloper.mozilla.org
@@ -16,13 +35,7 @@ function randomNumber(min, max) { //via doveloper.mozilla.org
   return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }
 
-//MANUALLY ENTERED ARRAY OF FILEPATHS----------------------------
-
-var photoOfGizmos = ['img/bag.jpg', 'img/banana.jpg', 'img/bathroom.jpg', 'img/boots.jpg', 'img/breakfast.jpg', 'img/bubblegum.jpg', 'img/chair.jpg', 'img/cthulhu.jpg', 'img/dog-duck.jpg', 'img/dragon.jpg', 'img/pen.jpg', 'img/pet-sweep.jpg', 'img/scissors.jpg', 'img/shark.jpg', 'img/sweep.png', 'img/tauntaun.jpg', 'img/unicorn.jpg', 'img/usb.jpg', 'img/water-can.jpg', 'img/wine-glass.jpg' ];
-
 //SLICE NAME FROM FILEPATH----------------------------------------
-
-var gizmoNames = [];
 
 for(var i = 0; i < photoOfGizmos.length; i++){
   var slcName = photoOfGizmos[i];
@@ -32,7 +45,6 @@ for(var i = 0; i < photoOfGizmos.length; i++){
 
 //CONSTRUCTOR FUCTION ---------------------------------------------
 
-Gizmos.allGizmos = [];
 
 function Gizmos(name, filepath){
   this.name = name;
@@ -43,13 +55,24 @@ function Gizmos(name, filepath){
   Gizmos.allGizmos.push(this);
 };
 
-for(var j = 0; j < gizmoNames.length; j++){
-  new Gizmos(gizmoNames[j], photoOfGizmos[j]);
+// for(var j = 0; j < gizmoNames.length; j++){
+//   new Gizmos(gizmoNames[j], photoOfGizmos[j]);
+// }
+
+//ADD PERSISTANCE-------------------------------------------------
+
+if (localStorage.list) {
+  Gizmos.allGizmos = JSON.parse(localStorage.list);
+  console.log('get localStorage')
+} else {
+  for(var j = 0; j < gizmoNames.length; j++){
+    new Gizmos(gizmoNames[j], photoOfGizmos[j]);
+  }
 }
 
-//GENERATE AN ARRAY OF THREE IMAGES-----------------------------------
 
-var threeRandomImages = [];
+
+//GENERATE AN ARRAY OF THREE IMAGES-----------------------------------
 
 
 var generateThreeImageFunction = function(){
@@ -81,15 +104,7 @@ var generateThreeImageFunction = function(){
   }
 };
 
-
-// generateThreeImageFunction(); //placed in function at bottom to call all together
-
-// console.log('Three Random Images Array', threeRandomImages);
-
-// //------------------------------------------------------------------
-//RENDER THREE IMAGES
-
-// var testImage = ['img/bag.jpg', 'img/banana.jpg', 'img/bathroom.jpg'];  //test array used to test render image for loop
+//RENDER THREE IMAGES-------------------------------------------------
 
 var renderThreeImagesToDom = function(){
   for(var k = 0; k < 3; k++){
@@ -102,8 +117,6 @@ var renderThreeImagesToDom = function(){
 };
 
 //ON CLICK EVENT CODE -------------------------------------------------
-
-var eventCounter = 0;
 
 
 var handleClick = function(e){
@@ -133,6 +146,7 @@ var handleClick = function(e){
     drawChart();
     eventCounter = 0;
     console.log(Gizmos.allGizmos);
+    localStorage.list = JSON.stringify(Gizmos.allGizmos);
   }
 };
 
@@ -153,7 +167,7 @@ image1.addEventListener('click',handleClick);
 image2.addEventListener('click',handleClick);
 
 //CHARTS.JS RENDER -----------------------------------------------------
-var totalNumberOfClicks = [];
+
 
 var numberOfClicksFunction = function(){
   for(var t = 0; t < photoOfGizmos.length; t++){
@@ -166,10 +180,6 @@ var numberOfClicksFunction = function(){
   console.log('totalNumberOfClicks', totalNumberOfClicks);
 };
 
-// numberOfClicksFunction();   ///left of here <------------------------------------------move into on click event function
-
-
-// Chart.data.push();
 
 //Chart Script----------------------------------------------------------------
 
